@@ -1,0 +1,34 @@
+{
+    "data": {
+        "user": {
+            "id": 1,
+            "username": "abc",
+            "email": "test@gmail.com",
+            "firstName": "",
+            "lastName": "",
+            "dateOfBirth": null,
+            "profileImage": null,
+            "createdAt": "2024-02-01T13:58:17.746Z",
+            "updatedAt": "2024-02-01T13:58:17.746Z",
+            "lastLogin": null,
+            "role": null,
+            "status": null,
+            "emailVerified": false,
+            "twoFactorEnabled": false,
+            "phoneNumber": null,
+            "refreshToken": "",
+            "additionalMetadata": null
+        },
+        "bearer": {
+            "expiresIn": 3600,
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoxNzA2Nzk1ODk3NzU2LCJpYXQiOjE3MDY3OTU4OTcsImV4cCI6MTcwNjc5OTQ5N30.SALYj8LQfRegGd899FDtimoXj_iXdqmmvYQ_q55FCa8",
+            "tokenType": "Bearer"
+        },
+        "refresh": {
+            "expiresIn": 86400,
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoxNzA2Nzk1ODk3NzU4LCJpYXQiOjE3MDY3OTU4OTcsImV4cCI6MTcwNjg4MjI5N30.ikPGPwKxAv3geT2kDoMTH7bkGRXNzYBb0WzDXufXKW8",
+            "tokenType": "Refresh"
+        }
+    },
+    "message": "signup"
+}

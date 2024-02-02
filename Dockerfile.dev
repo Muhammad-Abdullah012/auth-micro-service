@@ -1,0 +1,24 @@
+FROM node:21-alpine
+
+# Work to Dir
+WORKDIR /app
+
+
+RUN npm i -g pnpm
+RUN npm i -g dotenv-cli
+
+COPY ./package.json /app
+
+# Install Node Packages
+RUN pnpm i
+
+# Copy Dir
+COPY . /app
+
+# Set Env
+ENV NODE_ENV development
+
+EXPOSE 3000
+
+# Cmd script
+CMD ["pnpm", "run", "dev"]
