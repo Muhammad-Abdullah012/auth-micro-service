@@ -108,8 +108,15 @@ export class IndexController {
             expiresIn,
           )}`,
         }),
+        (err, info) => {
+          if (err) {
+            return res
+              .status(400)
+              .json({ message: "Failed to send password reset email!" });
+          }
+          res.status(200).json({ message: "Password reset email sent!" });
+        },
       );
-      res.status(200).json({ message: "Password reset email sent!" });
     } catch (error) {
       next(error);
     }

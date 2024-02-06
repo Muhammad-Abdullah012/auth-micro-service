@@ -28,6 +28,7 @@ export class IndexRoute implements Routes {
     this.router.post(
       `${this.path}forgot-password`,
       ValidationMiddleware(ForgotPasswordDto),
+      this.index.forgotPassword,
     );
     this.router.get(
       `${this.path}forgot-password`,
