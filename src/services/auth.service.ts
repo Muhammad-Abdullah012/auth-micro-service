@@ -74,7 +74,9 @@ export class AuthService {
     if (!findUser || findUser.deleted)
       throw new HttpException(
         409,
-        `This email ${userData.email} was not found`,
+        `User ${
+          userData.email?.length > 0 ? userData.email : userData.username
+        } not found`,
       );
 
     const isPasswordMatching: boolean = await compare(
