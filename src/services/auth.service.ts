@@ -38,9 +38,12 @@ export class AuthService {
 
     const hashedPassword = await hash(userData.password, 10);
     delete userData.password;
+    const dateOfBirthString = userData.dateOfBirth;
+    delete userData.dateOfBirth;
     const createUserData: User = await this.users.create({
       data: {
         ...userData,
+        dateOfBirth: dateOfBirthString ? new Date(dateOfBirthString) : null,
         passwordHash: hashedPassword,
         passwordResetToken: "",
         refreshToken: "",
