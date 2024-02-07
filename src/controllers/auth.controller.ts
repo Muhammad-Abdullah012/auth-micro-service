@@ -29,7 +29,7 @@ export class AuthController {
    *         description: Successful sign-up
    *         content:
    *           application/json:
-   *             example: { data: { user: {   }, bearer: "Bearer Token", refresh: "Refresh Token" }, message: "signup" }
+   *             example: { data: { user: {   }, bearer: "Bearer Token", refresh: "Refresh Token" } }
    *       500:
    *         description: Internal Server Error
    *         content:
@@ -75,7 +75,6 @@ export class AuthController {
           bearer,
           refresh,
         },
-        message: "signup",
       });
     } catch (error) {
       next(error);
@@ -90,7 +89,7 @@ export class AuthController {
     try {
       const userData = req.body;
       const { bearer, refresh } = await this.auth.login(userData);
-      res.status(200).json({ data: { refresh, bearer }, message: "login" });
+      res.status(200).json({ data: { refresh, bearer } });
     } catch (error) {
       next(error);
     }
@@ -105,7 +104,7 @@ export class AuthController {
       const userData: User = req.user;
       const logOutUserData: User = await this.auth.logout(userData);
 
-      res.status(200).json({ data: logOutUserData, message: "logout" });
+      res.status(200).json({ data: logOutUserData });
     } catch (error) {
       next(error);
     }
@@ -123,9 +122,7 @@ export class AuthController {
         userData,
         requestBody,
       );
-      res
-        .status(200)
-        .json({ data: changePasswordResponse, message: "changePassword" });
+      res.status(200).json({ data: changePasswordResponse });
     } catch (error) {
       next(error);
     }

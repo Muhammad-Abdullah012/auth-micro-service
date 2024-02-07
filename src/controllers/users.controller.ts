@@ -9,7 +9,11 @@ import { IndexService } from "@/services/index.service";
 export class UserController {
   public user = Container.get(UserService);
   public index = Container.get(IndexService);
-  public getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public getUsers = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const findAllUsersData: User[] = await this.user.findAllUser();
 
@@ -19,7 +23,11 @@ export class UserController {
     }
   };
 
-  public getMyProfile = (req: RequestWithUser, res: Response, next: NextFunction) => {
+  public getMyProfile = (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction,
+  ) => {
     try {
       const userData = removeExtraUserProperties(req.user);
       res.status(200).json({ data: userData });
@@ -27,7 +35,11 @@ export class UserController {
       next(error);
     }
   };
-  public getUserById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public getUserById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const userId = Number(req.params.id);
       const findOneUserData: User = await this.user.findUserById(userId);
@@ -38,26 +50,37 @@ export class UserController {
     }
   };
 
-  public updateUser = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+  public updateUser = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const userData = req.body;
       if (userData.username != null) {
         await this.index.checkUsernameAvailibility(userData.username);
       }
-      const updateUserData: User = await this.user.updateUser(req.user.id, userData);
+      const updateUserData: User = await this.user.updateUser(
+        req.user.id,
+        userData,
+      );
 
-      res.status(200).json({ data: removeExtraUserProperties(updateUserData), message: "updated" });
+      res.status(200).json({ data: removeExtraUserProperties(updateUserData) });
     } catch (error) {
       next(error);
     }
   };
 
-  public deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public deleteUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const userId = Number(req.params.id);
       const deleteUserData: User = await this.user.deleteUser(userId);
 
-      res.status(200).json({ data: deleteUserData, message: "deleted" });
+      res.status(200).json({ data: deleteUserData });
     } catch (error) {
       next(error);
     }
