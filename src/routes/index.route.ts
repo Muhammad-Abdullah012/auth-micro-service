@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { ValidationMiddleware } from "@/middlewares/validation.middleware";
 import {
-  AuthMiddleware,
   PasswordResetTokenValidationMiddleware,
   VerificationTokenMiddleware,
 } from "@/middlewares/auth.middleware";
@@ -40,11 +39,6 @@ export class IndexRoute implements Routes {
       `${this.path}check-username`,
       ValidationMiddleware(CheckUsernameDto),
       this.index.checkUsername,
-    );
-    this.router.post(
-      `${this.path}upload`,
-      AuthMiddleware,
-      this.index.fileUpload,
     );
   }
 }

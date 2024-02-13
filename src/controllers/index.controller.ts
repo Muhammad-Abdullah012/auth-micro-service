@@ -1,6 +1,3 @@
-import busboy = require("busboy");
-import { join } from "path";
-import { createWriteStream } from "fs";
 import { NextFunction, Request, Response } from "express";
 import { Container } from "typedi";
 import { IndexService } from "@services/index.service";
@@ -129,54 +126,6 @@ export class IndexController {
       res.status(200).json({ data: "Reset Password!" });
     } catch (error) {
       next(error);
-    }
-  }
-  public async fileUpload(
-    req: RequestWithUser,
-    res: Response,
-    next: NextFunction,
-  ) {
-    try {
-      const busboyInstance = busboy({ headers: req.headers });
-      const uploadDir = join(__dirname, "..", "..", "public", "images");
-      const filePaths = [];
-
-      busboyInstance.on(
-        "file",
-        (fieldname, file, { filename, encoding, mimeType }) => {
-          const _fileName =
-            new Date().getTime() + "_" + filename.split(" ").join("_");
-          const filePathAbsolute = join(uploadDir, _fileName);
-          const writeStream = createWriteStream(filePathAbsolute);
-          file.pipe(writeStream);
-          filePaths.push({[fieldname]: _fileName});
-
-          writeStream.on("close", async () => {
-            console.log(`File ${filename} saved successfully.`);
-            // if (mimeType.startsWith("image")) {
-            //   const idxController = new IndexController();
-            //   await idxController.index.setProfileImage(req.user, _fileName);
-            // }
-          });
-          writeStream.on("error", error => {
-            console.error("Error occured ==> ", error);
-          });
-        },
-      );
-
-      busboyInstance.on("error", error => {
-        console.error("error => ", error);
-        res.json({ message: "Something went wrong!" });
-      });
-      busboyInstance.on("finish", () => {
-        console.log("File upload finished.");
-        res.json({ data: filePaths });
-      });
-
-      req.pipe(busboyInstance);
-    } catch (err) {
-      console.error("Error occured ==> ", err);
-      next(err);
     }
   }
 }
