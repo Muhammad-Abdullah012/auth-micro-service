@@ -149,14 +149,14 @@ export class IndexController {
           const filePathAbsolute = join(uploadDir, _fileName);
           const writeStream = createWriteStream(filePathAbsolute);
           file.pipe(writeStream);
-          filePaths.push(filePathAbsolute);
+          filePaths.push({[fieldname]: _fileName});
 
           writeStream.on("close", async () => {
             console.log(`File ${filename} saved successfully.`);
-            if (mimeType.startsWith("image")) {
-              const idxController = new IndexController();
-              await idxController.index.setProfileImage(req.user, _fileName);
-            }
+            // if (mimeType.startsWith("image")) {
+            //   const idxController = new IndexController();
+            //   await idxController.index.setProfileImage(req.user, _fileName);
+            // }
           });
           writeStream.on("error", error => {
             console.error("Error occured ==> ", error);
@@ -170,7 +170,7 @@ export class IndexController {
       });
       busboyInstance.on("finish", () => {
         console.log("File upload finished.");
-        res.json({ success: true });
+        res.json({ data: filePaths });
       });
 
       req.pipe(busboyInstance);
