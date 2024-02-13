@@ -62,7 +62,14 @@ export class App {
     this.app.use(compression());
     this.app.use(hpp());
     this.app.use(cookieParser());
-    this.app.use(express.static(join(__dirname, "..", "public/images")));
+    this.app.use(
+      "/images",
+      (req, res, next) => {
+        res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+        next();
+      },
+      express.static(join(__dirname, "..", "public/images")),
+    );
   }
 
   private initializeRoutes(routes: Routes[]) {
