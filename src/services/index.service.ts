@@ -23,4 +23,11 @@ export class IndexService {
       data: { emailVerified: true, verificationToken: "" },
     });
   }
+
+  public setProfileImage(user: User, image: string): Promise<User> {
+    return this.users.update({
+      where: { email: user.email },
+      data: { profileImage: image },
+    });
+  }
 }

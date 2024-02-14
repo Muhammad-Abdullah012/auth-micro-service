@@ -7,6 +7,10 @@ import {
   REFRESH_TOKEN_SECRET_KEY,
   VERIFICATION_TOKEN_SECRET_KEY,
   PASSWORD_RESET_TOKEN_SECRET_KEY,
+  SECRET_KEY_EXPIRATION,
+  REFRESH_TOKEN_SECRET_KEY_EXPIRATION,
+  VERIFICATION_TOKEN_SECRET_KEY_EXPIRATION,
+  PASSWORD_RESET_TOKEN_SECRET_KEY_EXPIRATION,
 } from "@config";
 import { CreateUserDto, LoginUserDto } from "@dtos/users.dto";
 import { HttpException } from "@exceptions/HttpException";
@@ -38,9 +42,12 @@ export class AuthService {
 
     const hashedPassword = await hash(userData.password, 10);
     delete userData.password;
+    const dateOfBirthString = userData.dateOfBirth;
+    delete userData.dateOfBirth;
     const createUserData: User = await this.users.create({
       data: {
         ...userData,
+        dateOfBirth: dateOfBirthString ? new Date(dateOfBirthString) : null,
         passwordHash: hashedPassword,
         passwordResetToken: "",
         refreshToken: "",
@@ -71,7 +78,9 @@ export class AuthService {
     if (!findUser || findUser.deleted)
       throw new HttpException(
         409,
-        `This email ${userData.email} was not found`,
+        `User ${
+          userData.email?.length > 0 ? userData.email : userData.username
+        } not found`,
       );
 
     const isPasswordMatching: boolean = await compare(
@@ -135,7 +144,7 @@ export class AuthService {
     return this.jwtSignUser({
       user,
       secretKey: SECRET_KEY,
-      expiresIn: 60 * 60,
+      expiresIn: Number(SECRET_KEY_EXPIRATION),
     });
   }
 
@@ -151,7 +160,7 @@ export class AuthService {
     const { token, expiresIn } = this.jwtSignUser({
       user,
       secretKey: REFRESH_TOKEN_SECRET_KEY,
-      expiresIn: 24 * 60 * 60,
+      expiresIn: Number(REFRESH_TOKEN_SECRET_KEY_EXPIRATION),
     });
 
     await this.users.update({
@@ -177,7 +186,7 @@ export class AuthService {
     const { token, expiresIn } = this.jwtSignUser({
       user,
       secretKey: VERIFICATION_TOKEN_SECRET_KEY,
-      expiresIn: 30 * 60,
+      expiresIn: Number(VERIFICATION_TOKEN_SECRET_KEY_EXPIRATION),
     });
     await this.users.update({
       where: { email: user.email },
@@ -196,7 +205,7 @@ export class AuthService {
     const { token, expiresIn } = this.jwtSignUser({
       user,
       secretKey: PASSWORD_RESET_TOKEN_SECRET_KEY,
-      expiresIn: 15 * 60,
+      expiresIn: Number(PASSWORD_RESET_TOKEN_SECRET_KEY_EXPIRATION),
     });
 
     await this.users.update({

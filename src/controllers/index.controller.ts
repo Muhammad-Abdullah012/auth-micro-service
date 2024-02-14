@@ -72,7 +72,6 @@ export class IndexController {
       await idxController.index.checkUsernameAvailibility(req.body.username);
       res.status(200).json({
         data: `${req.body.username} is available!`,
-        message: "checkUsername",
       });
     } catch (error) {
       next(error);
@@ -114,7 +113,7 @@ export class IndexController {
               .status(400)
               .json({ message: "Failed to send password reset email!" });
           }
-          res.status(200).json({ message: "Password reset email sent!" });
+          res.status(200).json({ data: "Password reset email sent!" });
         },
       );
     } catch (error) {
@@ -124,7 +123,7 @@ export class IndexController {
 
   public async resetPassword(req: Request, res: Response, next: NextFunction) {
     try {
-      res.status(200).json({ message: "Reset Password!" });
+      res.status(200).json({ data: "Reset Password!" });
     } catch (error) {
       next(error);
     }

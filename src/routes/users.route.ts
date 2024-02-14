@@ -15,7 +15,12 @@ export class UserRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/profile`, AuthMiddleware, this.user.getMyProfile);
-    this.router.post(`${this.path}/update-profile`, AuthMiddleware, ValidationMiddleware(UpdateUserDto, false, true, true), this.user.updateUser);
+    this.router.get("/profile", AuthMiddleware, this.user.getMyProfile);
+    this.router.post(
+      "/update-profile",
+      AuthMiddleware,
+      ValidationMiddleware(UpdateUserDto, false, true, true),
+      this.user.updateUser,
+    );
   }
 }

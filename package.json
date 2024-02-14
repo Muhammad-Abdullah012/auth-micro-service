@@ -25,6 +25,7 @@
   "dependencies": {
     "@prisma/client": "^4.1.0",
     "bcrypt": "^5.0.1",
+    "busboy": "^1.6.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "compression": "^1.7.4",
@@ -52,6 +53,7 @@
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.220",
     "@types/bcrypt": "^5.0.0",
+    "@types/busboy": "^1.5.3",
     "@types/compression": "^1.7.2",
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.12",
