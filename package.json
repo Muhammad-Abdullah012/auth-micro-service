@@ -23,6 +23,7 @@
     "schema": "src/prisma/schema.prisma"
   },
   "dependencies": {
+    "@langchain/community": "^0.0.31",
     "@prisma/client": "^4.1.0",
     "bcrypt": "^5.0.1",
     "busboy": "^1.6.0",
