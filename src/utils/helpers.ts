@@ -26,3 +26,12 @@ export const getSendEmailPayload = ({
     text,
   };
 };
+
+export const stringifyIfPossible = (obj: any) => {
+  try {
+      return JSON.stringify(obj);
+  } catch (error) {
+      console.error('Unable to stringify the object:', error);
+      return null;
+  }
+}
