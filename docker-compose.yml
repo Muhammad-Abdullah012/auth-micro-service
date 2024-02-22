@@ -17,11 +17,9 @@ services:
     container_name: server
     build:
       context: ./
-      dockerfile: Dockerfile.dev
+      dockerfile: ${DOCKER_FILE_NAME}
     ports:
-      - "3000:3000"
-    env_file:
-      - .env.development.local
+      - "${PORT}:3000"
     tty: true
     volumes:
       - ./:/app
@@ -39,9 +37,7 @@ services:
     restart: always
     container_name: auth_micro_service_db
     ports:
-      - "5433:5432"
-    env_file:
-      - .env.development.local
+      - "${POSTGRES_PORT}:5432"
     networks:
       - backend
     volumes:
