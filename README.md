@@ -62,6 +62,7 @@ sudo docker-compose up -d
 ## Contributing
 
 Contributions are welcome! Feel free to open issues or submit pull requests to help improve this project.
-License
+
+## License
 
 This project is licensed under the MIT License. Feel free to use, modify, and distribute the code as per the terms of the license.
